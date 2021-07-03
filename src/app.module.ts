@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common'
 import { RemindersController } from './reminders/reminders.controller'
 import { RemindersService } from './reminders/reminders.service'
 import { UsersModule } from './users/users.module'
@@ -10,6 +15,6 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('reminders')
+    consumer.apply(logger).forRoutes(RemindersController)
   }
 }
