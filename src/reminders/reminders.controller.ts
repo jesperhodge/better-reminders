@@ -8,18 +8,21 @@ import {
   Param,
   Delete,
 } from '@nestjs/common'
-import { CreateReminderDto, UpdateReminderDto, ListAllEntities } from './dto'
-
+import { CreateReminderDto } from './dto/create-reminder.dto'
+import { RemindersService } from './reminders.service'
+import { Reminder } from './interfaces/reminder.interface'
 @Controller('reminders')
 export class RemindersController {
+  constructor(private remindersService: RemindersService) {}
+
   @Post()
-  create(@Body() createReminderDto: CreateReminderDto) {
-    return 'This action adds a new cat'
+  async create(@Body() createReminderDto: CreateReminderDto) {
+    this.remindersService
   }
 
   @Get()
-  findAll(@Query() query: ListAllEntities) {
-    return `This action returns all cats (limit: ${query.limit} items)`
+  async findAll(): Promise<Reminder[]> {
+    return this.remindersService.findAll()
   }
 
   @Get(':id')
